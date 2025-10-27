@@ -1,5 +1,1 @@
-export { Client } from './client.js';
-<$responseTypesExports>
-<$queryTypesExports>
-<$inputTypesExports>
-<$enumExports>
+export { Client } from './client.js';<$responseTypesExports><$queryTypesExports><$inputTypesExports><$enumExports>
