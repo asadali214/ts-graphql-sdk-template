@@ -98,18 +98,23 @@ export class GraphQLClient {
     const typeDefs = filteredTypes.length > 0 ?
         `(${filteredTypes.map(t => `$${t}: ${types[t]}`).join(', ')})` : '';
 
-    return `${operation}${typeDefs} { ${operationName}${varNames} {${fields}} }`;
+    return `${operation}${typeDefs} { ${operationName}${varNames}${fields} }`;
   }
 
   private buildFields(obj: Record<string, any>): string {
-    return Object.entries(obj)
+    const fields: string[] = Object.entries(obj)
       .filter(([_, v]) => v)
       .map(([k, v]) => {
         if (typeof v === 'object') {
-          return `${k} {${this.buildFields(v)}}`;
+          return k + this.buildFields(v);
         }
         return k;
-      })
-    .join(' ');
+      });
+
+    if (fields.length === 0) {
+      return '';
+    }
+
+    return ` {${fields.join(' ')}}`;
   }
 }
