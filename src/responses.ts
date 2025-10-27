@@ -1,4 +1,1 @@
-<$enumImports>
-<$schemaImports>
-
-<$responseInterfacesAndSchemas>
+<$schemaImports><$enumImports><$responseInterfacesAndSchemas>
