@@ -106,6 +106,9 @@ export class GraphQLClient {
       .filter(([_, v]) => v)
       .map(([k, v]) => {
         if (typeof v === 'object') {
+          if (k.startsWith('_on')) {
+            return `... on ${k.replace('_on', '')}` + this.buildFields(v);
+          }
           return k + this.buildFields(v);
         }
         return k;
@@ -115,6 +118,7 @@ export class GraphQLClient {
       return '';
     }
 
-    return ` {${fields.join(' ')}}`;
+    const typeName = Object.keys(obj).some(k => k.startsWith('_on')) ? '__typename ' : '';
+    return ` {${typeName}${fields.join(' ')}}`;
   }
 }
